@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uexplugins>
+  
+        <plugin
+        className="com.tmf.plugin.uextabbarwithpopmenu.EUExTabbarWithPopMenu" 
+        
+        uexName="uexTabBarWithPopMenu" >
+        <method name="open" />
+        <method name="close" />
+        <method name="setTabItems" />
+        <method name="setPopMenuItems" />
+       
+    </plugin>
+</uexplugins>

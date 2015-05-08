@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent" >
+
+    <LinearLayout
+        android:id="@+id/plugin_tab_tabbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#32394A"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/plugin_tab_item1"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/plugin_tab_item1_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/plugin_tabbar_home"
+                android:tag="iv" />
+
+            <TextView
+                android:id="@+id/plugin_tab_item1_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:tag="tv"
+                android:text="@string/plugin_tab_home" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/plugin_tab_item2"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/plugin_tab_item2_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/plugin_tabbar_camera_smal"
+                android:tag="iv" />
+
+            <TextView
+                android:id="@+id/plugin_tab_item2_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:tag="tv"
+                android:text="@string/plugin_tab_camera" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/plugin_tab_itemwithe"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plugin_tabbar_transpant" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/plugin_tab_item3"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/plugin_tab_item3_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/plugin_babbar_search"
+                android:tag="iv" />
+
+            <TextView
+                android:id="@+id/plugin_tab_item3_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:tag="tv"
+                android:text="@string/plugin_tab_search" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/plugin_tab_item4"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/plugin_tab_item4_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/plugin_tabbar_upload"
+                android:tag="iv" />
+
+            <TextView
+                android:id="@+id/plugin_tab_item4_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:tag="tv"
+                android:text="@string/plugin_tab_upload" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/plugin_tab_popcover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             android:background="#99000000"
+            android:orientation="vertical"
+            android:visibility="gone" >
+      </LinearLayout>
+
+ <GridView 
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_above="@+id/plugin_tab_itemmenu"
+     android:id="@+id/plugin_tab_popitems"
+     android:numColumns="4"
+     android:stretchMode="columnWidth"
+     android:verticalSpacing="10dp"
+     android:horizontalSpacing="10dp"
+     
+     android:scrollbars="none"  
+     android:visibility="gone"
+     android:background="@color/transparent"
+     
+     
+     
+     ></GridView>
+
+    
+
+       
+
+        <ImageButton
+            android:id="@+id/plugin_tab_itemmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/plugin_tabbar_menu_1" />
+  
+
+</RelativeLayout>

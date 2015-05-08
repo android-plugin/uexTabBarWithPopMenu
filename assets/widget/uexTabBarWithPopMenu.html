@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<title>PathArcMenu</title>
+<script type="text/javascript">
+    window.uexOnload = function() {
+		uexWidgetOne.onError = function(opCode, errorCode, errorDesc) {
+			alert(errorCode + ":" + errorDesc);
+		}
+	}
+    function createMenu(){
+        uexTabBarWithPopMenu.onTabItemClick = tabItemCallback;
+        uexTabBarWithPopMenu.onPopMenuItemClick = popItemCallback;
+
+        uexTabBarWithPopMenu.open('0','150','320','416');
+    }
+    function setMenuItems(){
+        var param = "{\"tabItems\":[{\"text\":\"动态\",\"textColor\":\"\"},{\"text\":\"与我相关\",\"textColor\":\"\"},{\"text\":\"我的空间\",\"textColor\":\"\"},{\"text\":\"玩吧\",\"textColor\":\"\"}]}";
+
+        uexTabBarWithPopMenu.setTabItems(param);
+    }
+    function setPopItems(){
+        var param = "{\"popMenuItems\":[{\"item\":{\"text\":\"联系人\",\"imgNormal\":\"res://plugin_tabbar_contacts@2x.png\",\"imgHighlight\":\"res://plugin_tabbar_contacts@2x.png\",\"textColor\":\"#FFFF00\"}},{\"item\":{\"text\":\"保存\",\"imgNormal\":\"res://plugin_tabbar_save@2x.png\",\"imgHighlight\":\"res://plugin_tabbar_save@2x.png\",\"textColor\":\"#FF00FF\"}},{\"item\":{\"text\":\"拍照\",\"imgNormal\":\"res://plugin_tabbar_photos@2x.png\",\"imgHighlight\":\"res://plugin_tabbar_photos@2x.png\",\"textColor\":\"#FFFFFF\"}},{\"item\":{\"text\":\"打印文件\",\"imgNormal\":\"res://plugin_tabbar_printfile@2x.png\",\"imgHighlight\":\"res://plugin_tabbar_printfile@2x.png\",\"textColor\":\"#FFFFFF\"}},{\"item\":{\"text\":\"定位\",\"imgNormal\":\"res://plugin_tabbar_location@2x.png\",\"imgHighlight\":\"res://plugin_tabbar_location@2x.png\",\"textColor\":\"#FFFF00\"}}]}";
+        uexTabBarWithPopMenu.setPopMenuItems(param);
+    }
+    function tabItemCallback(data){
+        alert("回掉成功,item = "+data);
+    }
+    function popItemCallback(data){
+        alert("回掉成功,item = "+data);
+    }
+    function closeMenu(){
+        uexTabBarWithPopMenu.close();
+    }
+    
+</script>
+</head>
+
+<body>
+	<div class="tit">Demo</div>
+        <div class="conbor">
+            <div class="consj">
+                <input class="btn" type="button" value="打开Demo" onclick="createMenu();"/>
+                <input class="btn" type="button" value="设置tabitems" onclick="setMenuItems();"/>
+                <input class="btn" type="button" value="设置popitems" onclick="setPopItems();"/>
+
+                <input class="btn" type="button" value="关闭" onclick="closeMenu();"/>
+                <input class="btn" type="button" value="返回" onclick="uexWindow.close();"/>
+            </div>
+        </div>
+</body>
+</html>

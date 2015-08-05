@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <script type="text/javascript">
+    function open(){
+        var params = {
+        };
+        var data = JSON.stringify(params);
+        uexTabBarWithPopMenu.open(data);
+    }
+
+    function close(){
+        var params = {
+        };
+        var data = JSON.stringify(params);
+        uexTabBarWithPopMenu.close(data);
+    }
+
+    function setTabItems(){
+        var params = {
+        };
+        var data = JSON.stringify(params);
+        uexTabBarWithPopMenu.setTabItems(data);
+    }
+
+    function setPopMenuItems(){
+        var params = {
+        };
+        var data = JSON.stringify(params);
+        uexTabBarWithPopMenu.setPopMenuItems(data);
+    }
+
+    function setItemChecked(){
+        var params = {
+            index:""
+        };
+        var data = JSON.stringify(params);
+        uexTabBarWithPopMenu.setItemChecked(data);
+    }
+
+
+        window.uexOnload = function(type){
+            if(type == 0){
+            uexTabBarWithPopMenu.onTabItemClick = onTabItemClick;
+            uexTabBarWithPopMenu.onPopMenuItemClick = onPopMenuItemClick;
+
+            }
+        }
+    function onTabItemClick(info){
+        alert(info);
+    }
+
+    function onPopMenuItemClick(info){
+        alert(info);
+    }
+
+
+    </script>
+</head>
+
+<body>
+<div class="tit">uexTabBarWithPopMenu</div>
+<div class="conbor">
+    <div class="consj">
+            <input class='btn' type='button' value='open' onclick='open()'>
+
+            <input class='btn' type='button' value='close' onclick='close()'>
+
+            <input class='btn' type='button' value='setTabItems' onclick='setTabItems()'>
+
+            <input class='btn' type='button' value='setPopMenuItems' onclick='setPopMenuItems()'>
+
+            <input class='btn' type='button' value='setItemChecked' onclick='setItemChecked()'>
+
+
+    </div>
+</div>
+</body>
+</html>

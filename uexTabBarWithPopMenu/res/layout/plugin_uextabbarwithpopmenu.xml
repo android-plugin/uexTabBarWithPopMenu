@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#32394A"
+        android:background="#ffffff"
         android:orientation="horizontal" >
 
         <LinearLayout
@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/plugin_tabbar_home"
+                android:scaleType="fitXY"
                 android:tag="iv" />
 
             <TextView
@@ -35,8 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:tag="tv"
-                android:text="@string/plugin_tab_home" />
+                android:tag="tv"/>
         </LinearLayout>
 
         <LinearLayout
@@ -54,7 +53,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/plugin_tabbar_camera_smal"
                 android:tag="iv" />
 
             <TextView
@@ -62,8 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:tag="tv"
-                android:text="@string/plugin_tab_camera" />
+                android:tag="tv"/>
         </LinearLayout>
 
         <LinearLayout
@@ -96,7 +93,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/plugin_babbar_search"
                 android:tag="iv" />
 
             <TextView
@@ -104,8 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:tag="tv"
-                android:text="@string/plugin_tab_search" />
+                android:tag="tv"/>
         </LinearLayout>
 
         <LinearLayout
@@ -123,7 +118,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/plugin_tabbar_upload"
                 android:tag="iv" />
 
             <TextView
@@ -131,8 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:tag="tv"
-                android:text="@string/plugin_tab_upload" />
+                android:tag="tv"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -153,28 +146,18 @@
      android:stretchMode="columnWidth"
      android:verticalSpacing="10dp"
      android:horizontalSpacing="10dp"
-     
-     android:scrollbars="none"  
+     android:listSelector="@color/transparent"
+     android:cacheColorHint="@color/transparent"
+     android:scrollbars="none"
      android:visibility="gone"
      android:background="@color/transparent"
-     
-     
-     
      ></GridView>
-
-    
-
-       
-
-        <ImageButton
+        <ImageView
             android:id="@+id/plugin_tab_itemmenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            
             android:layout_marginBottom="8dp"
-            android:background="@drawable/plugin_tabbar_menu_1" />
-  
-
+            />
 </RelativeLayout>

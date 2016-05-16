@@ -1,6 +1,8 @@
 package org.zywx.wbpalmstar.plugin.uextabbarwithpopmenu;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,6 +41,7 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
     private int[] menuItemsId;
     private int[] menuItemsImgId;
     private int[] menuItemsTextId;
+    private int [] indicatorId;
 
 
     private int menuOpenAnimId,menuCloseAnimId;
@@ -63,7 +66,7 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
         menuItemsId = new int[menuSize];
         menuItemsImgId = new int[menuSize];
         menuItemsTextId = new int[menuSize];
-        initId();
+        indicatorId = new int[menuSize];
         this.callback = callback;
         this.mContext = ctx;
         this.mData = data;
@@ -99,6 +102,14 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
             TextView text = (TextView) tabbarWithPopMenu.findViewById(menuItemsTextId[i]);
             text.setTextSize(mData.getTab().getTextSize());
             text.setTextColor(mData.getTab().getTextNColor());
+            View view =  tabbarWithPopMenu.findViewById(indicatorId[i]);
+            if (!TextUtils.isEmpty(mData.getStatusColor())) {
+                view.setBackgroundColor(Color.parseColor(mData.getStatusColor()));
+            } else {
+                view.setBackgroundColor(Color.parseColor("#EA7C24"));
+            }
+
+
             if (i < list.size()) {
                 text.setText(list.get(i).getTitle());
                 ACEImageLoader.getInstance().displayImage(img, list.get(i).getIconN());
@@ -149,18 +160,24 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
         menuItemsId[0] = EUExUtil.getResIdID("plugin_tab_item1");
         menuItemsImgId[0] = EUExUtil.getResIdID("plugin_tab_item1_image");
         menuItemsTextId[0] = EUExUtil.getResIdID("plugin_tab_item1_text");
+        indicatorId[0] = EUExUtil.getResIdID("plugin_tab_item1_indicator");
+
 
         menuItemsId[1] = EUExUtil.getResIdID("plugin_tab_item2");
         menuItemsImgId[1] = EUExUtil.getResIdID("plugin_tab_item2_image");
         menuItemsTextId[1] = EUExUtil.getResIdID("plugin_tab_item2_text");
+        indicatorId[1] = EUExUtil.getResIdID("plugin_tab_item2_indicator");
+
 
         if (menuSize == 4) {
             menuItemsId[2] = EUExUtil.getResIdID("plugin_tab_item3");
             menuItemsImgId[2] = EUExUtil.getResIdID("plugin_tab_item3_image");
             menuItemsTextId[2] = EUExUtil.getResIdID("plugin_tab_item3_text");
+            indicatorId[2] = EUExUtil.getResIdID("plugin_tab_item3_indicator");
             menuItemsId[3] = EUExUtil.getResIdID("plugin_tab_item4");
             menuItemsImgId[3] = EUExUtil.getResIdID("plugin_tab_item4_image");
             menuItemsTextId[3] = EUExUtil.getResIdID("plugin_tab_item4_text");
+            indicatorId[3] = EUExUtil.getResIdID("plugin_tab_item4_indicator");
         }
         menuOpenAnimId=EUExUtil.getResAnimID("plugin_tabpop_mainmenu_open");
         menuCloseAnimId=EUExUtil.getResAnimID("plugin_tabpop_mainmenu_close");
@@ -258,6 +275,8 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
         ImageView img = (ImageView) tabbarWithPopMenu.findViewById(menuItemsImgId[index]);
         TextView text = (TextView) tabbarWithPopMenu.findViewById(menuItemsTextId[index]);
         text.setTextColor(mData.getTab().getTextNColor());
+        View view =  tabbarWithPopMenu.findViewById(indicatorId[index]);
+        view.setVisibility(View.GONE);
         if (index < list.size()) {
             ACEImageLoader.getInstance().displayImage(img, list.get(index).getIconN());
         }
@@ -268,6 +287,8 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
         ImageView img = (ImageView) tabbarWithPopMenu.findViewById(menuItemsImgId[index]);
         TextView text = (TextView) tabbarWithPopMenu.findViewById(menuItemsTextId[index]);
         text.setTextColor(mData.getTab().getTextHColor());
+        View view =  tabbarWithPopMenu.findViewById(indicatorId[index]);
+        view.setVisibility(View.VISIBLE);
         if (index < list.size()) {
             ACEImageLoader.getInstance().displayImage(img, list.get(index).getIconH());
         }

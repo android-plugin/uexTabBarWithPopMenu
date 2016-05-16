@@ -37,6 +37,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:tag="tv"/>
+            <View
+                android:id="@+id/plugin_tab_item1_indicator"
+                android:layout_height="3dp"
+                android:layout_width="80dp"
+                android:visibility="gone"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -78,6 +84,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:tag="tv"/>
+            <View
+                android:id="@+id/plugin_tab_item2_indicator"
+                android:layout_height="3dp"
+                android:layout_width="80dp"
+                android:visibility="gone"
+                />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

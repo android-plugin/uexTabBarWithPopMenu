@@ -1,10 +1,11 @@
 package org.zywx.wbpalmstar.plugin.uextabbarwithpopmenu;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -35,12 +36,11 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
     private GridView popItemGrid;
     
     private int layoutId, mainItemId, popCoverId,popItemGridId;
-    private int[] menuItemsId = new int[] { 0, 0, 0, 0 };
-    private int[] menuItemsImgId = new int[] { 0, 0, 0, 0 };
-    private int[] menuItemsTextId = new int[] { 0, 0, 0, 0 };
-    private String[] popMenuItemText=new String[]{"联系人","保存","拍照","打印文件","定位"};
-    
-    
+    private int[] menuItemsId;
+    private int[] menuItemsImgId;
+    private int[] menuItemsTextId;
+
+
     private int menuOpenAnimId,menuCloseAnimId;
 
     private TabPopCallbackListener callback;
@@ -50,10 +50,19 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
     private PopAdapter popAdapter;
     private boolean isInit;
     private OpenDataVO mData;
-
+    private int menuSize = 4; //底部menu默认是 4 个
+    private float bottomDistance = EUExUtil.dipToPixels(300);
 
 
     public TableBarWithPopMenu(Context ctx, OpenDataVO data, TabPopCallbackListener callback) {
+        menuSize = data.getTab().getData().size();
+        if (menuSize != 2) {
+            menuSize = 4;
+        }
+        bottomDistance = data.getPopMenu().getBottomDistance();
+        menuItemsId = new int[menuSize];
+        menuItemsImgId = new int[menuSize];
+        menuItemsTextId = new int[menuSize];
         initId();
         this.callback = callback;
         this.mContext = ctx;
@@ -81,7 +90,7 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
         mainItem.getLayoutParams().width = mData.getHeight();
         ACEImageLoader.getInstance().displayImage(mainItem, mData.getTab().getCenterImg());
         mainItem.setOnClickListener(this);
-        for(int i = 0; i < 4;i++){
+        for(int i = 0; i < menuSize; i++){
             LinearLayout item = (LinearLayout) tabbarWithPopMenu.findViewById(menuItemsId[i]);
             List<DataItemVO> list = mData.getTab().getData();
             ImageView img = (ImageView) tabbarWithPopMenu.findViewById(menuItemsImgId[i]);
@@ -97,13 +106,29 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
             menuitems.add(item);
             item.setOnClickListener(this);
         }
-        popItemGrid=(GridView) tabbarWithPopMenu.findViewById(popItemGridId);
+        int gvLayoutId = EUExUtil.getResLayoutID("plugin_uextabbarwithpopmenu_gv");
+        popItemGrid = (GridView) lif.inflate(gvLayoutId, null);
+        popItemGrid.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        closePopMenu(-1);
+                }
+                return false;
+            }
+        });
 
-        popAdapter=new PopAdapter(mContext, mData);
-        
+        popAdapter = new PopAdapter(mContext, mData);
         popItemGrid.setAdapter(popAdapter);
         popItemGrid.setOnItemClickListener(this);
-        
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+        layoutParams.height = EUExUtil.dipToPixels((int)bottomDistance);
+        layoutParams.leftMargin = 0;
+        tabbarWithPopMenu.addView(popItemGrid, layoutParams);
+
         popCover = (LinearLayout) tabbarWithPopMenu.findViewById(popCoverId);
         popCover.setBackgroundColor(mData.getPopMenu().getBgColor());
         popCover.setOnClickListener(this);
@@ -112,64 +137,33 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
     }
 
     private void initId() {
-        // TODO Auto-generated method stub
-        layoutId = EUExUtil.getResLayoutID("plugin_uextabbarwithpopmenu");
-        
+        if (menuSize == 2) {
+            layoutId = EUExUtil.getResLayoutID("plugin_uextabbarwithpopmenu_2");
+        } else {
+            layoutId = EUExUtil.getResLayoutID("plugin_uextabbarwithpopmenu");
+        }
         mainItemId = EUExUtil.getResIdID("plugin_tab_itemmenu");
         popCoverId = EUExUtil.getResIdID("plugin_tab_popcover");
         popItemGridId=EUExUtil.getResIdID("plugin_tab_popitems");
 
         menuItemsId[0] = EUExUtil.getResIdID("plugin_tab_item1");
-        menuItemsId[1] = EUExUtil.getResIdID("plugin_tab_item2");
-        menuItemsId[2] = EUExUtil.getResIdID("plugin_tab_item3");
-        menuItemsId[3] = EUExUtil.getResIdID("plugin_tab_item4");
-
         menuItemsImgId[0] = EUExUtil.getResIdID("plugin_tab_item1_image");
-        menuItemsImgId[1] = EUExUtil.getResIdID("plugin_tab_item2_image");
-        menuItemsImgId[2] = EUExUtil.getResIdID("plugin_tab_item3_image");
-        menuItemsImgId[3] = EUExUtil.getResIdID("plugin_tab_item4_image");
-
         menuItemsTextId[0] = EUExUtil.getResIdID("plugin_tab_item1_text");
-        menuItemsTextId[1] = EUExUtil.getResIdID("plugin_tab_item2_text");
-        menuItemsTextId[2] = EUExUtil.getResIdID("plugin_tab_item3_text");
-        menuItemsTextId[3] = EUExUtil.getResIdID("plugin_tab_item4_text");
 
+        menuItemsId[1] = EUExUtil.getResIdID("plugin_tab_item2");
+        menuItemsImgId[1] = EUExUtil.getResIdID("plugin_tab_item2_image");
+        menuItemsTextId[1] = EUExUtil.getResIdID("plugin_tab_item2_text");
+
+        if (menuSize == 4) {
+            menuItemsId[2] = EUExUtil.getResIdID("plugin_tab_item3");
+            menuItemsImgId[2] = EUExUtil.getResIdID("plugin_tab_item3_image");
+            menuItemsTextId[2] = EUExUtil.getResIdID("plugin_tab_item3_text");
+            menuItemsId[3] = EUExUtil.getResIdID("plugin_tab_item4");
+            menuItemsImgId[3] = EUExUtil.getResIdID("plugin_tab_item4_image");
+            menuItemsTextId[3] = EUExUtil.getResIdID("plugin_tab_item4_text");
+        }
         menuOpenAnimId=EUExUtil.getResAnimID("plugin_tabpop_mainmenu_open");
         menuCloseAnimId=EUExUtil.getResAnimID("plugin_tabpop_mainmenu_close");
-        
-
-    }
-
-    
-    public void setTabItems(List<TabItemBean> items) {
-        // TODO Auto-generated method stub
-        for (int i = 0; i < 4; i++) {
-
-            TextView tv = (TextView) menuitems.get(i).findViewWithTag("tv");
-
-            // text: “动态”,textColor:, //文本颜色
-
-            String text = items.get(i).text;
-            if (null != text && !text.equals("")) {
-                tv.setText(text);
-            }
-            int color = items.get(i).textColor;
-            if (color != 0) {
-                tv.setTextColor(color);
-            }
-
-        }
-         tabbarWithPopMenu.postInvalidate();
-
-    }
-
-    @SuppressLint("NewApi")
-    public void setPopItems(List<PopItemBean> items) {
-        // TODO Auto-generated method stub
-//       popAdapter=new PopAdapter(mContext,items);
-//       popItemGrid.setAdapter(popAdapter);
-//       tabbarWithPopMenu.postInvalidate();
-      
     }
 
     private void startOpenAnimation() {
@@ -187,35 +181,34 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
     
 
     @Override
-    public void onClick(View arg0) {
-        // TODO Auto-generated method stub
-        if (arg0.equals(mainItem)) {
+    public void onClick(View view) {
+        if (view.equals(mainItem)) {
             if (isOpenMenu) {
                 closePopMenu(0);
             } else {
-
                 openPopMenu();
             }
-        } else if (arg0.equals(menuitems.get(0))) {
+        } else if (view.equals(menuitems.get(0))) {
             OnTabItemClick(0);
-        } else if (arg0.equals(menuitems.get(1))) {
+        } else if (view.equals(menuitems.get(1))) {
             OnTabItemClick(1);
-        } else if (arg0.equals(menuitems.get(2))) {
+        } else if (menuItemsId.length > 2 && view.equals(menuitems.get(2))) {
             OnTabItemClick(2);
-        } else if (arg0.equals(menuitems.get(3))) {
+        } else if (menuItemsId.length > 2 && view.equals(menuitems.get(3))) {
             OnTabItemClick(3);
-        } else if (arg0.equals(popCover)||arg0.equals(popItemGrid)) {
+        } else if (view.equals(popCover) || view.equals(popItemGrid)) {
             closePopMenu(-1);
         }
     }
 
     private void OnTabItemClick(int i) {
-
         callback.onTabItemClick(i);
-
     }
 
     private void closePopMenu(int i) {
+        if (!isOpenMenu) {
+            return;
+        }
         isOpenMenu = false;
         startCloseAnimation(i);
         popCover.setVisibility(View.GONE);
@@ -225,7 +218,6 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
 
     private void openPopMenu() {
         isOpenMenu = true;
-        
         popCover.setVisibility(View.VISIBLE);
         popItemGrid.setVisibility(View.VISIBLE);
         startOpenAnimation();
@@ -234,14 +226,12 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-        // TODO Auto-generated method stub
         callback.onPopMenuItemClick(arg2);
         closePopMenu(arg2 + 1);
         
     }
 
     public void clean() {
-        // TODO Auto-generated method stub
         tabbarWithPopMenu=null;
         isInit=false;
     }
@@ -253,7 +243,7 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
 
     public void setItemChecked(int index){
         if (isInit){
-            for (int i = 0; i < 4; i++){
+            for (int i = 0; i < menuSize; i++){
                 if (i == index){
                     setCheckedState(i);
                 }else {

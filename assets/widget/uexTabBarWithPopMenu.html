@@ -1,26 +1,19 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no" />
-<link rel="stylesheet" type="text/css" href="css/index.css">
-<title>PathArcMenu</title>
-<script type="text/javascript">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>PathArcMenu</title>
+    <script type="text/javascript">
     window.uexOnload = function() {
-		uexWidgetOne.onError = function(opCode, errorCode, errorDesc) {
-			alert(errorCode + ":" + errorDesc);
-		}
-	}
-    function createMenu(){
         uexTabBarWithPopMenu.onTabItemClick = tabItemCallback;
         uexTabBarWithPopMenu.onPopMenuItemClick = popItemCallback;
-
+	}
+    function createMenu(){
         var params = {
-            left:0,
-            top:300,
-            width:-1,
-            height:120,
+            statusColor:"#EA7C24",
             tab:{
                 textSize:10,
                 textNColor:"#ffffff",
@@ -51,10 +44,11 @@
                 ]
             },
             popMenu:{
-                textSize:15,
+                textSize:13,
                 textNColor:"#000000",
                 textHColor:"#dddddd",
-                bgColor:"#66ffffff",
+                bgColor:"#ffffff",
+                bottomDistance:300,
                 data:[
                     {
                         title: "联系人",
@@ -81,74 +75,23 @@
                         iconN:"res://pop5.png",
                         iconH:"res://pop5_1.png"
                     }
+                    
                 ]
             }
         }
         uexTabBarWithPopMenu.open(JSON.stringify(params));
-        setItemChecked(0);
-        //uexTabBarWithPopMenu.open('0','150','320','416');
+        
     }
-    function setMenuItems(){
-        var param = {
-            tabItems:[
-                {
-                    text:"动态",
-                    textColor:""
-                },
-                {
-                    text:"与我相关",
-                    textColor:""
-                },
-                {
-                    text:"我的空间",
-                    textColor:""
-                },
-                {
-                    text:"玩吧",
-                    textColor:""
-                }
-            ]
-        };
-
-        uexTabBarWithPopMenu.setTabItems(JSON.stringify(param));
-    }
-    function setPopItems(){
-        var param = {
-            popMenuItems: [
-                {
-                    text: "联系人",
-                    imgNormal: "res://plugin_tabbar_contacts@2x.png",
-                    imgHighlight: "res://plugin_tabbar_contacts@2x.png",
-                    textColor: "#FFFF00"
-                },
-                {
-                    text: "保存",
-                    imgNormal: "res://plugin_tabbar_save@2x.png",
-                    imgHighlight: "res://plugin_tabbar_save@2x.png",
-                    textColor: "#FF00FF"
-                },
-                {
-                    text: "拍照",
-                    imgNormal: "res://plugin_tabbar_photos@2x.png",
-                    imgHighlight: "res://plugin_tabbar_photos@2x.png",
-                    textColor: "#FFFFFF"
-                },
-                {
-                    text: "打印文件",
-                    imgNormal: "res://plugin_tabbar_printfile@2x.png",
-                    imgHighlight: "res://plugin_tabbar_printfile@2x.png",
-                    textColor: "#FFFFFF"
-                },
-                {
-                    text: "定位",
-                    imgNormal: "res://plugin_tabbar_location@2x.png",
-                    imgHighlight: "res://plugin_tabbar_location@2x.png",
-                    textColor: "#FFFF00"
-                }
-            ]
-        };
-        uexTabBarWithPopMenu.setPopMenuItems(param);
-    }
+   function closeMenu(){
+      uexTabBarWithPopMenu.close();
+   }
+   function setMenu(){
+      var params = {
+          index:1
+    };
+    var data = JSON.stringify(params);
+    uexTabBarWithPopMenu.setItemChecked(data);
+   }
     function tabItemCallback(data){
         alert("tabItemCallback:"+data);
         setItemChecked(JSON.parse(data).index);
@@ -156,30 +99,17 @@
     function popItemCallback(data){
         alert("popItemCallback:"+data);
     }
-    function closeMenu(){
-        uexTabBarWithPopMenu.close();
-    }
-    function setItemChecked(i){
-        var params = {
-            index:i
-        };
-        var data = JSON.stringify(params);
-        uexTabBarWithPopMenu.setItemChecked(data);
-    }
 </script>
 </head>
 
 <body>
-	<div class="tit">Demo</div>
-        <div class="conbor">
-            <div class="consj">
-                <input class="btn" type="button" value="打开Demo" onclick="createMenu();"/>
-                <input class="btn" type="button" value="设置tabitems" onclick="setMenuItems();"/>
-                <input class="btn" type="button" value="设置popitems" onclick="setPopItems();"/>
-
-                <input class="btn" type="button" value="关闭" onclick="closeMenu();"/>
-                <input class="btn" type="button" value="返回" onclick="uexWindow.close();"/>
-            </div>
-        </div>
+<div class="tit">Demo</div>
+<div class="conbor">
+    <div class="consj">
+        <input class="btn" type="button" value="open" onclick="createMenu();"/>
+        <input class="btn" type="button" value="close" onclick="closeMenu();"/>
+        <input class="btn" type="button" value="setItemChecked" onclick="setMenu();"/>
+    </div>
+</div>
 </body>
 </html>

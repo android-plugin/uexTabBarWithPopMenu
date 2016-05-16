@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GridView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/plugin_tab_itemmenu"
+    android:id="@+id/plugin_tab_popitems"
+    android:numColumns="4"
+    android:stretchMode="columnWidth"
+    android:verticalSpacing="10dp"
+    android:horizontalSpacing="10dp"
+    android:listSelector="@color/transparent"
+    android:cacheColorHint="@color/transparent"
+    android:scrollbars="none"
+    android:visibility="gone"
+    android:background="@color/transparent"
+    />

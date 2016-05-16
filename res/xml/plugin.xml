@@ -5,8 +5,6 @@
         uexName="uexTabBarWithPopMenu" >
         <method name="open" />
         <method name="close" />
-        <method name="setTabItems" />
-        <method name="setPopMenuItems" />
         <method name="setItemChecked"/>
     </plugin>
 </uexplugins>

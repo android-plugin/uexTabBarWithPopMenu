@@ -16,6 +16,7 @@
             android:id="@+id/plugin_tab_item1"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
@@ -42,6 +43,7 @@
             android:id="@+id/plugin_tab_item2"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
@@ -82,6 +84,7 @@
             android:id="@+id/plugin_tab_item3"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
@@ -107,6 +110,7 @@
             android:id="@+id/plugin_tab_item4"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
             android:paddingTop="5dp"
@@ -137,21 +141,21 @@
             android:visibility="gone" >
       </LinearLayout>
 
- <GridView 
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:layout_above="@+id/plugin_tab_itemmenu"
-     android:id="@+id/plugin_tab_popitems"
-     android:numColumns="4"
-     android:stretchMode="columnWidth"
-     android:verticalSpacing="10dp"
-     android:horizontalSpacing="10dp"
-     android:listSelector="@color/transparent"
-     android:cacheColorHint="@color/transparent"
-     android:scrollbars="none"
-     android:visibility="gone"
-     android:background="@color/transparent"
-     ></GridView>
+     <GridView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/plugin_tab_itemmenu"
+         android:id="@+id/plugin_tab_popitems"
+         android:numColumns="4"
+         android:stretchMode="columnWidth"
+         android:verticalSpacing="10dp"
+         android:horizontalSpacing="10dp"
+         android:listSelector="@color/transparent"
+         android:cacheColorHint="@color/transparent"
+         android:scrollbars="none"
+         android:visibility="gone"
+         android:background="@color/transparent"
+         ></GridView>
         <ImageView
             android:id="@+id/plugin_tab_itemmenu"
             android:layout_width="wrap_content"

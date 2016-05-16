@@ -12,6 +12,7 @@ import org.zywx.wbpalmstar.base.BUtility;
 import org.zywx.wbpalmstar.engine.DataHelper;
 import org.zywx.wbpalmstar.engine.EBrowserView;
 import org.zywx.wbpalmstar.engine.universalex.EUExBase;
+import org.zywx.wbpalmstar.engine.universalex.EUExUtil;
 import org.zywx.wbpalmstar.plugin.uextabbarwithpopmenu.vo.DataItemVO;
 import org.zywx.wbpalmstar.plugin.uextabbarwithpopmenu.vo.OpenDataVO;
 
@@ -25,8 +26,7 @@ public class EUExTabBarWithPopMenu extends EUExBase {
     private TableBarWithPopMenu tabBarView;
     private static final int MSG_OPEN = 1;
     private static final int MSG_CLOSE = 2;
-    private static final int MSG_SET_TAB_ITEMS = 3;
-    private static final int MSG_SET_POP_MENU_ITEMS = 4;
+    private static final int DEFAULT_HEIGHT = 60;
 
     public EUExTabBarWithPopMenu(Context context, EBrowserView eBrowserView) {
         super(context, eBrowserView);
@@ -59,6 +59,9 @@ public class EUExTabBarWithPopMenu extends EUExBase {
             errorCallback(0, 0, "error params!");
             return;
         }
+        if (dataVO.getHeight() <= 0) {
+            dataVO.setHeight(EUExUtil.dipToPixels(DEFAULT_HEIGHT));
+        }
         List<DataItemVO> tabData = dataVO.getTab().getData();
         setRealPath(tabData);
         List<DataItemVO> popData = dataVO.getPopMenu().getData();
@@ -69,8 +72,6 @@ public class EUExTabBarWithPopMenu extends EUExBase {
         }
         final RelativeLayout.LayoutParams lparm = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        lparm.leftMargin = dataVO.getLeft();
-        lparm.topMargin = dataVO.getTop();
         if (tabBarView == null) {
             tabBarView = new TableBarWithPopMenu(mContext, dataVO, mListener);
             tabBarView.initView();
@@ -113,42 +114,6 @@ public class EUExTabBarWithPopMenu extends EUExBase {
         if (tabBarView != null&&tabBarView.isInitView()) {
             removeViewFromCurrentWindow(tabBarView.getAllView());
         }
-    }
-
-    public void setTabItems(String[] params) {
-        if (params == null || params.length < 1) {
-            errorCallback(0, 0, "error params!");
-            return;
-        }
-        Message msg = new Message();
-        msg.obj = this;
-        msg.what = MSG_SET_TAB_ITEMS;
-        Bundle bd = new Bundle();
-        bd.putStringArray(BUNDLE_DATA, params);
-        msg.setData(bd);
-        mHandler.sendMessage(msg);
-    }
-
-    private void setTabItemsMsg(String[] params) {
-        String json = params[0];
-    }
-
-    public void setPopMenuItems(String[] params) {
-        if (params == null || params.length < 1) {
-            errorCallback(0, 0, "error params!");
-            return;
-        }
-        Message msg = new Message();
-        msg.obj = this;
-        msg.what = MSG_SET_POP_MENU_ITEMS;
-        Bundle bd = new Bundle();
-        bd.putStringArray(BUNDLE_DATA, params);
-        msg.setData(bd);
-        mHandler.sendMessage(msg);
-    }
-
-    private void setPopMenuItemsMsg(String[] params) {
-        String json = params[0];
     }
 
     public void setItemChecked(String[] params) {
@@ -195,12 +160,6 @@ public class EUExTabBarWithPopMenu extends EUExBase {
             case MSG_CLOSE:
                 closeMsg();
                 break;
-            case MSG_SET_TAB_ITEMS:
-                setTabItemsMsg(bundle.getStringArray(BUNDLE_DATA));
-                break;
-            case MSG_SET_POP_MENU_ITEMS:
-                setPopMenuItemsMsg(bundle.getStringArray(BUNDLE_DATA));
-                break;
             case MSG_SET_ITEM_CHECKED:
                 setItemCheckedMsg(bundle.getStringArray(BUNDLE_DATA));
                 break;
@@ -218,6 +177,7 @@ public class EUExTabBarWithPopMenu extends EUExBase {
     private TabPopCallbackListener mListener = new TabPopCallbackListener() {
         @Override
         public void onTabItemClick(int index) {
+            tabBarView.setItemChecked(index);
             callbackToHtml(index, JsConst.ON_TAB_ITEM_CLICK);
         }
 

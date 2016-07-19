@@ -5,6 +5,9 @@ import java.io.Serializable;
 public class OpenDataVO implements Serializable{
     private static final long serialVersionUID = 8270321726298949867L;
     private String statusColor;
+    private String indicatorColor;
+    private String indicatorSelectColor;
+
     private double left = 0;
     private double top = 0;
     private double width = -1;
@@ -65,5 +68,21 @@ public class OpenDataVO implements Serializable{
 
     public void setStatusColor(String statusColor) {
         this.statusColor = statusColor;
+    }
+
+    public String getIndicatorSelectColor() {
+        return indicatorSelectColor;
+    }
+
+    public void setIndicatorSelectColor(String indicatorSelectColor) {
+        this.indicatorSelectColor = indicatorSelectColor;
+    }
+
+    public String getIndicatorColor() {
+        return indicatorColor;
+    }
+
+    public void setIndicatorColor(String indicatorColor) {
+        this.indicatorColor = indicatorColor;
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/transparent" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent">
 
     <LinearLayout
         android:id="@+id/plugin_tab_tabbar"
@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#ffffff"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/plugin_tab_item1"
@@ -18,29 +18,40 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
 
-            <ImageView
-                android:id="@+id/plugin_tab_item1_image"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:tag="iv" />
+                android:paddingRight="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="3dp"
+                >
+
+                <ImageView
+                    android:id="@+id/plugin_tab_item1_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:tag="iv"/>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/plugin_tab_item1_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:tag="tv"/>
+
             <View
                 android:id="@+id/plugin_tab_item1_indicator"
-                android:layout_height="3dp"
                 android:layout_width="80dp"
+                android:layout_height="3dp"
                 android:visibility="gone"
                 />
         </LinearLayout>
@@ -51,17 +62,26 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
 
-            <ImageView
-                android:id="@+id/plugin_tab_item2_image"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:tag="iv" />
+                android:paddingRight="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="3dp"
+                >
+
+                <ImageView
+                    android:id="@+id/plugin_tab_item2_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:tag="iv"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/plugin_tab_item2_text"
@@ -72,8 +92,8 @@
 
             <View
                 android:id="@+id/plugin_tab_item2_indicator"
-                android:layout_height="3dp"
                 android:layout_width="80dp"
+                android:layout_height="3dp"
                 android:visibility="gone"
                 />
         </LinearLayout>
@@ -83,14 +103,14 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingTop="5dp"
+            android:orientation="vertical"
             android:paddingBottom="5dp"
-            android:orientation="vertical" >
+            android:paddingTop="5dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/plugin_tabbar_transpant" />
+                android:src="@drawable/plugin_tabbar_transpant"/>
         </LinearLayout>
 
         <LinearLayout
@@ -99,17 +119,26 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
 
-            <ImageView
-                android:id="@+id/plugin_tab_item3_image"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:tag="iv" />
+                android:paddingRight="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="3dp"
+                >
+
+                <ImageView
+                    android:id="@+id/plugin_tab_item3_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:tag="iv"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/plugin_tab_item3_text"
@@ -117,10 +146,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:tag="tv"/>
+
             <View
                 android:id="@+id/plugin_tab_item3_indicator"
-                android:layout_height="3dp"
                 android:layout_width="80dp"
+                android:layout_height="3dp"
                 android:visibility="gone"
                 />
         </LinearLayout>
@@ -132,16 +162,25 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="5dp"
+            android:orientation="vertical"
             android:paddingBottom="5dp"
-            android:orientation="vertical" >
+            android:paddingTop="5dp">
 
-            <ImageView
-                android:id="@+id/plugin_tab_item4_image"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:tag="iv" />
+                android:paddingRight="3dp"
+                android:paddingTop="3dp"
+                android:paddingLeft="3dp"
+                >
+
+                <ImageView
+                    android:id="@+id/plugin_tab_item4_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:tag="iv"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/plugin_tab_item4_text"
@@ -149,44 +188,47 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:tag="tv"/>
+
             <View
                 android:id="@+id/plugin_tab_item4_indicator"
-                android:layout_height="3dp"
                 android:layout_width="80dp"
+                android:layout_height="3dp"
                 android:visibility="gone"
                 />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-            android:id="@+id/plugin_tab_popcover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-             android:background="#99000000"
-            android:orientation="vertical"
-            android:visibility="gone" >
-      </LinearLayout>
 
-     <GridView
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_above="@+id/plugin_tab_itemmenu"
-         android:id="@+id/plugin_tab_popitems"
-         android:numColumns="4"
-         android:stretchMode="columnWidth"
-         android:verticalSpacing="10dp"
-         android:horizontalSpacing="10dp"
-         android:listSelector="@color/transparent"
-         android:cacheColorHint="@color/transparent"
-         android:scrollbars="none"
-         android:visibility="gone"
-         android:background="@color/transparent"
-         ></GridView>
-        <ImageView
-            android:id="@+id/plugin_tab_itemmenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            />
+    <LinearLayout
+        android:id="@+id/plugin_tab_popcover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:orientation="vertical"
+        android:visibility="gone">
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/plugin_tab_popitems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/plugin_tab_itemmenu"
+        android:background="@color/transparent"
+        android:cacheColorHint="@color/transparent"
+        android:horizontalSpacing="10dp"
+        android:listSelector="@color/transparent"
+        android:numColumns="4"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp"
+        android:visibility="gone"
+        ></GridView>
+
+    <ImageView
+        android:id="@+id/plugin_tab_itemmenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        />
 </RelativeLayout>

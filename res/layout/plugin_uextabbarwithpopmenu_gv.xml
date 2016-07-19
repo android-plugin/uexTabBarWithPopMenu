@@ -13,6 +13,5 @@
     android:listSelector="@color/transparent"
     android:cacheColorHint="@color/transparent"
     android:scrollbars="none"
-    android:visibility="gone"
     android:background="@color/transparent"
     />

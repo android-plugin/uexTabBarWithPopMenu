@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
-    <plugin uexName="uexTabBarWithPopMenu" version="3.0.0" build="0">
-         <info>0:插件开发uexTabBarWithPopMenu</info>
+    <plugin uexName="uexTabBarWithPopMenu" version="3.0.1" build="1">
+         <info>0:支持页面切换和消息提醒(仿QQ空间)</info>
+         <build>0:插件开发uexTabBarWithPopMenu</build>
     </plugin>
 </uexplugins>

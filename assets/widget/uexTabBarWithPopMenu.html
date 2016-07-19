@@ -1,23 +1,26 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport"
-          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no" />
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <title>PathArcMenu</title>
-    <script type="text/javascript">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<title>PathArcMenu</title>
+<script type="text/javascript">
     window.uexOnload = function() {
         uexTabBarWithPopMenu.onTabItemClick = tabItemCallback;
         uexTabBarWithPopMenu.onPopMenuItemClick = popItemCallback;
+
 	}
     function createMenu(){
         var params = {
-            statusColor:"#EA7C24",
+            statusColor:"#ffffff",
+            //indicatorColor:"#EA7C24",
+            //indicatorSelectColor:"#EE0000",
             tab:{
                 textSize:10,
                 textNColor:"#ffffff",
-                textHColor:"#EA7C24",
+                textHColor:"#EE0000",
                 centerImg:"res://plus2.png",
                 bgColor:"#32394A",
                 data:[
@@ -44,12 +47,13 @@
                 ]
             },
             popMenu:{
-                textSize:13,
+                textSize:12,
                 textNColor:"#000000",
-                textHColor:"#dddddd",
+                textHColor:"#EA7C24",
                 bgColor:"#ffffff",
                 bottomDistance:300,
                 data:[
+                      [
                     {
                         title: "联系人",
                         iconN:"res://pop1.png",
@@ -75,12 +79,70 @@
                         iconN:"res://pop5.png",
                         iconH:"res://pop5_1.png"
                     }
-                    
-                ]
+
+                ],
+                      [
+                       {
+                       title: "联系人",
+                       iconN:"res://pop1.png",
+                       iconH:"res://pop1_1.png"
+                       },
+                       {
+                       title: "联系人",
+                       iconN:"res://pop1.png",
+                       iconH:"res://pop1_1.png"
+                       },
+                       {
+                       title: "联系人",
+                       iconN:"res://pop1.png",
+                       iconH:"res://pop1_1.png"
+                       },
+                       {
+                       title: "联系人",
+                       iconN:"res://pop1.png",
+                       iconH:"res://pop1_1.png"
+                       },
+                       {
+                       title: "定位",
+                       iconN:"res://pop5.png",
+                       iconH:"res://pop5_1.png"
+                       }
+
+                       ],
+                      [
+                       {
+                       title: "联系人",
+                       iconN:"res://pop1.png",
+                       iconH:"res://pop1_1.png"
+                       },
+                       {
+                       title: "保存",
+                       iconN:"res://pop2.png",
+                       iconH:"res://pop2_1.png"
+                       },
+                       {
+                       title: "拍照",
+                       iconN:"res://pop3.png",
+                       iconH:"res://pop3_1.png"
+                       },
+                       {
+                       title: "打印文件",
+                       iconN:"res://pop4.png",
+                       iconH:"res://pop4_1.png"
+                       },
+                       {
+                       title: "定位",
+                       iconN:"res://pop5.png",
+                       iconH:"res://pop5_1.png"
+                       }
+
+                       ]
+                      ]
             }
         }
         uexTabBarWithPopMenu.open(JSON.stringify(params));
-        
+
+
     }
    function closeMenu(){
       uexTabBarWithPopMenu.close();
@@ -92,24 +154,52 @@
     var data = JSON.stringify(params);
     uexTabBarWithPopMenu.setItemChecked(data);
    }
-    function tabItemCallback(data){
-        alert("tabItemCallback:"+data);
-        setItemChecked(JSON.parse(data).index);
+function setBadge(){
+    var params = {
+        indexes:[0,1,2]
+    };
+    var data = JSON.stringify(params);
+    uexTabBarWithPopMenu.setBadge(data);
+}
+
+function removeBadge(){
+    var params = {
+        indexes:[0, 1]
+    };
+    var data = JSON.stringify(params);
+    uexTabBarWithPopMenu.removeBadge(data);
+}
+
+function removeAllBadge(){
+    uexTabBarWithPopMenu.removeBadge();
+}
+function tabItemCallback(data){
+        alert("tabItemCallback:"+data.index);
+        var params = {
+            indexes:[data.index]
+        };
+         var data1 = JSON.stringify(params);
+        uexTabBarWithPopMenu.removeBadge(data1);
+
     }
-    function popItemCallback(data){
-        alert("popItemCallback:"+data);
+function popItemCallback(data){
+        alert("popItemCallback:"+"\npage:" +data.page +"\nindex"+data.index);
     }
+
 </script>
 </head>
 
 <body>
-<div class="tit">Demo</div>
-<div class="conbor">
-    <div class="consj">
-        <input class="btn" type="button" value="open" onclick="createMenu();"/>
-        <input class="btn" type="button" value="close" onclick="closeMenu();"/>
-        <input class="btn" type="button" value="setItemChecked" onclick="setMenu();"/>
-    </div>
-</div>
+	<div class="tit">Demo</div>
+        <div class="conbor">
+            <div class="consj">
+                <input class="btn" type="button" value="open" onclick="createMenu();"/>
+                <input class="btn" type="button" value="close" onclick="closeMenu();"/>
+                <input class="btn" type="button" value="setItemChecked" onclick="setMenu();"/>
+                <input class="btn" type="button" value="setBadage" onclick="setBadge();"/>
+                 <input class="btn" type="button" value="removeBadage" onclick="removeBadge();"/>
+                 <input class="btn" type="button" value="removeAllBadge" onclick="removeAllBadge();"/>
+            </div>
+        </div>
 </body>
 </html>

@@ -4,20 +4,18 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.zywx.wbpalmstar.base.ACEImageLoader;
 import org.zywx.wbpalmstar.engine.universalex.EUExUtil;
 import org.zywx.wbpalmstar.plugin.uextabbarwithpopmenu.EUExTabBarWithPopMenu.TabPopCallbackListener;
@@ -27,7 +25,7 @@ import org.zywx.wbpalmstar.plugin.uextabbarwithpopmenu.vo.OpenDataVO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener{
+public class TableBarWithPopMenu implements OnClickListener{
 
     private RelativeLayout tabbarWithPopMenu;
 
@@ -36,8 +34,9 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
     private LinearLayout popCover;
 
     private GridView popItemGrid;
-    
-    private int layoutId, mainItemId, popCoverId,popItemGridId;
+    private PopMenuView popMenuView;
+    private final String POPMENU_TAG = "popMenuView";
+    private int layoutId, mainItemId, popCoverId;
     private int[] menuItemsId;
     private int[] menuItemsImgId;
     private int[] menuItemsTextId;
@@ -72,11 +71,11 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
         this.mData = data;
 
     }
-    
+
     public boolean isInitView(){
         return isInit ;
     }
-    
+
     public void initView(){
         initId();
         LayoutInflater lif = LayoutInflater.from(mContext);
@@ -117,34 +116,14 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
             menuitems.add(item);
             item.setOnClickListener(this);
         }
-        int gvLayoutId = EUExUtil.getResLayoutID("plugin_uextabbarwithpopmenu_gv");
-        popItemGrid = (GridView) lif.inflate(gvLayoutId, null);
-        popItemGrid.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_UP:
-                        closePopMenu(-1);
-                }
-                return false;
-            }
-        });
 
-        popAdapter = new PopAdapter(mContext, mData);
-        popItemGrid.setAdapter(popAdapter);
-        popItemGrid.setOnItemClickListener(this);
 
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-        layoutParams.height = EUExUtil.dipToPixels((int)bottomDistance);
-        layoutParams.leftMargin = 0;
-        tabbarWithPopMenu.addView(popItemGrid, layoutParams);
 
         popCover = (LinearLayout) tabbarWithPopMenu.findViewById(popCoverId);
         popCover.setBackgroundColor(mData.getPopMenu().getBgColor());
         popCover.setOnClickListener(this);
         isInit=true;
-        
+
     }
 
     private void initId() {
@@ -155,7 +134,6 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
         }
         mainItemId = EUExUtil.getResIdID("plugin_tab_itemmenu");
         popCoverId = EUExUtil.getResIdID("plugin_tab_popcover");
-        popItemGridId=EUExUtil.getResIdID("plugin_tab_popitems");
 
         menuItemsId[0] = EUExUtil.getResIdID("plugin_tab_item1");
         menuItemsImgId[0] = EUExUtil.getResIdID("plugin_tab_item1_image");
@@ -189,19 +167,19 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
        mainItem.startAnimation(anim);
     }
 
-    private void startCloseAnimation(int i) {
+    private void startCloseAnimation() {
          Animation anim=AnimationUtils.loadAnimation(mContext, menuCloseAnimId);
          anim.setFillAfter(true);
          mainItem.startAnimation(anim);
     }
 
-    
+
 
     @Override
     public void onClick(View view) {
         if (view.equals(mainItem)) {
             if (isOpenMenu) {
-                closePopMenu(0);
+                closePopMenu();
             } else {
                 openPopMenu();
             }
@@ -213,8 +191,8 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
             OnTabItemClick(2);
         } else if (menuItemsId.length > 2 && view.equals(menuitems.get(3))) {
             OnTabItemClick(3);
-        } else if (view.equals(popCover) || view.equals(popItemGrid)) {
-            closePopMenu(-1);
+        } else if (view.equals(popCover) || POPMENU_TAG.equals(view.getTag())) {
+            closePopMenu();
         }
     }
 
@@ -222,39 +200,52 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
         callback.onTabItemClick(i);
     }
 
-    private void closePopMenu(int i) {
+    private void closePopMenu() {
         if (!isOpenMenu) {
             return;
         }
         isOpenMenu = false;
-        startCloseAnimation(i);
+        startCloseAnimation();
         popCover.setVisibility(View.GONE);
-        popItemGrid.setVisibility(View.GONE);
+        popMenuView.setVisibility(View.GONE);
+        popMenuView = null;
 
     }
 
     private void openPopMenu() {
+        if(popMenuView == null) {
+            popMenuView = new PopMenuView(mContext, eventInterface);
+            popMenuView.setData(mData);
+            popMenuView.setTag(POPMENU_TAG);
+
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+            layoutParams.height = EUExUtil.dipToPixels((int)bottomDistance);
+            layoutParams.leftMargin = 0;
+            tabbarWithPopMenu.addView(popMenuView, layoutParams);
+        }
         isOpenMenu = true;
         popCover.setVisibility(View.VISIBLE);
-        popItemGrid.setVisibility(View.VISIBLE);
+        popMenuView.setVisibility(View.VISIBLE);
         startOpenAnimation();
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-        callback.onPopMenuItemClick(arg2);
-        closePopMenu(arg2 + 1);
-        
-    }
 
+    private PopMenuEventInterface eventInterface = new PopMenuEventInterface() {
+        @Override
+        public void onMenuItemClick(int page, int index) {
+            callback.onPopMenuItemClick(page, index);
+            closePopMenu();
+
+        }
+    };
     public void clean() {
         tabbarWithPopMenu=null;
         isInit=false;
     }
 
     public View getAllView() {
-        // TODO Auto-generated method stub
         return tabbarWithPopMenu;
     }
 
@@ -291,6 +282,61 @@ public class TableBarWithPopMenu implements OnClickListener ,OnItemClickListener
         view.setVisibility(View.VISIBLE);
         if (index < list.size()) {
             ACEImageLoader.getInstance().displayImage(img, list.get(index).getIconH());
+        }
+    }
+
+    public void setBadge(JSONArray indexes) {
+        for(int i = 0; i < menuSize; i++) {
+            for (int j = 0; j < indexes.length(); j ++) {
+                if (i == indexes.optInt(j, -1)) {
+                    boolean hasAdded = false;
+                    ImageView img = (ImageView) tabbarWithPopMenu.findViewById(menuItemsImgId[i]);
+                    //判断是否已添加进去了
+                    ViewGroup group = (ViewGroup)img.getParent().getParent();
+                    for (int k = 0; k < group.getChildCount(); k ++) {
+                        if (group.getChildAt(k) instanceof BadgeView) {
+                            hasAdded = true;
+                            break;
+                        }
+                    }
+                    if (!hasAdded) {
+                        BadgeView badgeView = new BadgeView(mContext);
+                        badgeView.setTargetView((ViewGroup) (img.getParent()));
+                    }
+
+                }
+            }
+        }
+    }
+
+    public void removeBadge(JSONArray indexes) {
+        for(int i = 0; i < menuSize; i++) {
+            //如果不传参数，删除所有
+            if(indexes == null) {
+                ImageView img = (ImageView) tabbarWithPopMenu.findViewById(menuItemsImgId[i]);
+                ViewGroup group = (ViewGroup) (img.getParent().getParent());
+                int count = group.getChildCount();
+                for (int k = 0; k < count; k++) {
+                    if (group.getChildAt(k) instanceof BadgeView) {
+                        BadgeView badgeView = (BadgeView) group.getChildAt(k);
+                        badgeView.remove();
+                    }
+                }
+            } else {
+                for (int j = 0; j < indexes.length(); j++) {
+                    if (i == indexes.optInt(j, -1)) {
+                        ImageView img = (ImageView) tabbarWithPopMenu.findViewById(menuItemsImgId[i]);
+                        ViewGroup group = (ViewGroup) (img.getParent().getParent());
+                        int count = group.getChildCount();
+                        for (int k = 0; k < count; k++) {
+                            if (group.getChildAt(k) instanceof BadgeView) {
+                                BadgeView badgeView = (BadgeView) group.getChildAt(k);
+                                badgeView.remove();
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

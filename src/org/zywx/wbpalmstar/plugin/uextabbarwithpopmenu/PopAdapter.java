@@ -20,6 +20,7 @@ import org.zywx.wbpalmstar.engine.universalex.EUExUtil;
 import org.zywx.wbpalmstar.plugin.uextabbarwithpopmenu.vo.DataItemVO;
 import org.zywx.wbpalmstar.plugin.uextabbarwithpopmenu.vo.OpenDataVO;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class PopAdapter extends BaseAdapter {
@@ -27,28 +28,29 @@ public class PopAdapter extends BaseAdapter {
 	private OpenDataVO data;
 	private LayoutInflater inf;
 	private int itemId, imageId, textId;
-    private List<DataItemVO> mList;
+    private List<DataItemVO> itemList;
 
-	public PopAdapter(Context ctx, OpenDataVO data) {
+	public PopAdapter(Context ctx, OpenDataVO data, int index) {
 		this.mContext = ctx;
 		this.data = data;
 		inf = LayoutInflater.from(ctx);
 		itemId = EUExUtil.getResLayoutID("plugin_tab_gridview_item");
 		imageId = EUExUtil.getResIdID("plugin_tab_grid_image");
 		textId = EUExUtil.getResIdID("plugin_tab_grid_title");
-        this.mList = data.getPopMenu().getData();
-	}
+        DataItemVO [] itemVOs = data.getPopMenu().getData()[index];
+        this.itemList = Arrays.asList(itemVOs);
+    }
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return mList.size();
+		return itemList.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
 		// TODO Auto-generated method stub
-		return mList.get(arg0);
+		return itemList.get(arg0);
 	}
 
 	@Override
@@ -72,7 +74,7 @@ public class PopAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
         final int index = arg0;
-		DataItemVO dataItem = mList.get(index);
+		DataItemVO dataItem = itemList.get(index);
         Log.i("djf", "title = " + dataItem.getTitle());
         viewHolder.title.setText(dataItem.getTitle());
 		viewHolder.title.setTextColor(TabBarUtils.createColorSelector(
@@ -122,8 +124,7 @@ public class PopAdapter extends BaseAdapter {
 	}
 
 	public void setData(List<PopItemBean> items) {
-		// TODO Auto-generated method stub
-		//data = items;
+
 	}
 
 }

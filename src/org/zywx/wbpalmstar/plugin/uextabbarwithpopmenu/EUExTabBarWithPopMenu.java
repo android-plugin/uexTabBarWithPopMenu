@@ -6,6 +6,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.widget.RelativeLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.zywx.wbpalmstar.base.BUtility;
@@ -64,7 +65,7 @@ public class EUExTabBarWithPopMenu extends EUExBase {
         }
         List<DataItemVO> tabData = dataVO.getTab().getData();
         setRealPath(tabData);
-        List<DataItemVO> popData = dataVO.getPopMenu().getData();
+        DataItemVO[][] popData = dataVO.getPopMenu().getData();
         setRealPath(popData);
         String centerImg = dataVO.getTab().getCenterImg();
         if (!TextUtils.isEmpty(centerImg)){
@@ -90,6 +91,16 @@ public class EUExTabBarWithPopMenu extends EUExBase {
             itemVO.setIconH(getRealPath(itemVO.getIconH()));
         }
     }
+    private void setRealPath( DataItemVO[][] data) {
+        if (data == null || data.length < 1) return;
+        for (int i = 0; i < data.length; i++){
+            for (int j = 0; j < data[i].length; j ++) {
+                DataItemVO itemVO = data[i][j];
+                itemVO.setIconN(getRealPath(itemVO.getIconN()));
+                itemVO.setIconH(getRealPath(itemVO.getIconH()));
+            }
+        }
+    }
 
     private String getRealPath(String srcPath){
         if (TextUtils.isEmpty(srcPath)) return null;
@@ -113,6 +124,7 @@ public class EUExTabBarWithPopMenu extends EUExBase {
     private void closeMsg() {
         if (tabBarView != null&&tabBarView.isInitView()) {
             removeViewFromCurrentWindow(tabBarView.getAllView());
+            tabBarView = null;
         }
     }
 
@@ -146,6 +158,39 @@ public class EUExTabBarWithPopMenu extends EUExBase {
         tabBarView.setItemChecked(index);
     }
 
+    public void setBadge(String [] params) {
+        if (params == null || params.length < 1) {
+            return;
+        }
+        String str = params[0];
+        try {
+            JSONObject object = new JSONObject(str);
+            JSONArray indexes = object.getJSONArray("indexes");
+            tabBarView.setBadge(indexes);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeBadge(String [] params) {
+        String str = null ;
+        if (params != null && params.length == 1) {
+            str = params[0];;
+        }
+        try {
+            if (str!= null) {
+                JSONObject object = new JSONObject(str);
+                JSONArray indexes = object.optJSONArray("indexes");
+                tabBarView.removeBadge(indexes);
+            } else {
+                tabBarView.removeBadge(null);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public void onHandleMessage(Message message) {
         if(message == null){
@@ -153,7 +198,6 @@ public class EUExTabBarWithPopMenu extends EUExBase {
         }
         Bundle bundle=message.getData();
         switch (message.what) {
-
             case MSG_OPEN:
                 openMsg(bundle.getStringArray(BUNDLE_DATA));
                 break;
@@ -168,12 +212,6 @@ public class EUExTabBarWithPopMenu extends EUExBase {
         }
     }
 
-    private void callBackPluginJs(String methodName, String jsonData){
-        String js = SCRIPT_HEADER + "if(" + methodName + "){"
-                + methodName + "('" + jsonData + "');}";
-        onCallback(js);
-    }
-
     private TabPopCallbackListener mListener = new TabPopCallbackListener() {
         @Override
         public void onTabItemClick(int index) {
@@ -182,8 +220,8 @@ public class EUExTabBarWithPopMenu extends EUExBase {
         }
 
         @Override
-        public void onPopMenuItemClick(int index) {
-            callbackToHtml(index, JsConst.ON_POP_MENU_ITEM_CLICK);
+        public void onPopMenuItemClick(int page, int index) {
+            callbackToHtml(page, index, JsConst.ON_POP_MENU_ITEM_CLICK);
         }
     };
 
@@ -194,12 +232,23 @@ public class EUExTabBarWithPopMenu extends EUExBase {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        callBackPluginJs(methodName, jsonObject.toString());
+        callBackJsObject(methodName, jsonObject);
+    }
+
+    private void callbackToHtml(int page, int index, String methodName) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(JsConst.CALLBACK_PAGE, page);
+            jsonObject.put(JsConst.CALLBACK_INDEX, index);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        callBackJsObject(methodName, jsonObject);
     }
 
     public interface TabPopCallbackListener{
         public void onTabItemClick(int index);
-        public void onPopMenuItemClick(int index);
+        public void onPopMenuItemClick(int page, int index);
     }
 
 }

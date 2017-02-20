@@ -10,7 +10,7 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "23.0.2"
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -41,3 +41,4 @@ android {
     productFlavors {
     }
 }
+apply from: "https://raw.githubusercontent.com/android-plugin/gradle-plugin/master/buildPlugin.gradle"
